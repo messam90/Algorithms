@@ -23,5 +23,7 @@ void testdiffPossible();
 void testanagrams();
 void test_equal();
 void test_copyRandomList();
+void test_lengthOfLongestSubstring();
+void test_minWindow();
 
 #endif /* HASHING_HASHING_HPP_ */

@@ -21,7 +21,9 @@ int main(){
 	//testdiffPossible();
 	//testanagrams();
 	//test_equal();
-	test_copyRandomList();
+	//test_copyRandomList();
+	//test_lengthOfLongestSubstring();
+	test_minWindow();
 }
 
 

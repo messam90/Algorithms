@@ -338,7 +338,72 @@ RandomListNode* copyRandomList(RandomListNode* A) {
 	return new_list_head;
 }
 
+int lengthOfLongestSubstring(string A) {
+	int result = 0, temp_result = 0, first_position = -1;
+	unordered_set<char> temp_set;
+
+	for(auto i = 0; i < A.length(); i++){
+		auto it = temp_set.find(A[i]);
+		if(it == temp_set.end()){
+			temp_result++;
+			temp_set.insert(A[i]);
+			first_position = (first_position == -1) ? i : first_position;
+		}else{
+			result = (temp_result > result) ? temp_result : result;
+			temp_result = 0;
+			temp_set.clear();
+			i = first_position;
+			first_position = -1;
+		}
+	}
+	result = (temp_result > result) ? temp_result : result;
+
+	return result;
+}
+
+string minWindow(string A, string B) {
+	int first_position = 0, match_count = 0;
+	unordered_set<char> small_set;
+	string result(A), temp_result;
+
+	for(auto i = 0; i < B.length();i++){
+		small_set.insert(B[i]);
+	}
+
+	auto small_set_temp(small_set);
+
+	for(auto i = 0; i < A.length(); ++i){
+		temp_result += A[i];
+		auto it = small_set_temp.find(A[i]);
+		if(it != small_set_temp.end()){
+			small_set_temp.erase(it);
+			match_count++;
+
+			if(match_count == B.length()){
+				if(temp_result.length() < result.length()){
+					result = temp_result;
+				}
+				i = first_position;
+				first_position++;
+				temp_result.clear();
+				match_count = 0;
+				small_set_temp = small_set;
+			}
+		}
+	}
+
+	return result;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
+void test_minWindow(){
+	cout<<minWindow("ADOBECODEBANC", "ABC");
+}
+
+void test_lengthOfLongestSubstring(){
+	cout<<lengthOfLongestSubstring("dadbc");
+}
+
 void test_copyRandomList(){
 	string command = "66 290 229 136 74 260 41 79 87 177 77 228 232 276 185 35 242 28 178 77 206 226 10 234 52 67 33 104 144 190 160 70 6 191 211 4 217 6 28 195 107 34 220 144 75 67 129 4 253 103 140 168 211 280 291 218 127 147 42 266 8 142 73 138 36 20 70 52 264 195 94 76 63 217 18 53 136 132 62 73 83 66 222 250 213 196 129 31 296 184 252 172 58 188 37 142 272 254 205 165 42 271 159 167 181 217 79 163 219 286 93 112 189 94 169 223 99 138 253 28 205 106 281 254 130 294 193 215 253 218 213 221 73";
 	stringstream ss(command);
