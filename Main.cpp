@@ -7,6 +7,10 @@
 #include "Headers.hpp"
 #include "Heaps_Maps.hpp"
 #include "Hashing.hpp"
+#include "Stacks_Queues.hpp"
+#include "LinkedLists.hpp"
+#include "Strings.hpp"
+#include "TwoPointers.hpp"
 
 int main(){
 	//testSolveMaps();
@@ -23,7 +27,32 @@ int main(){
 	//test_equal();
 	//test_copyRandomList();
 	//test_lengthOfLongestSubstring();
-	test_minWindow();
+	//test_minWindow();
+	//test_fractionToDecimal();
+	//test_maxPoints();
+	//test_findSubstring();
+	//test_largestRectangleArea();
+	//test_braces();
+	//test_MinStack();
+	//test_solve_nrc();
+	//test_maxSpecialProduct();
+	//test_deleteDuplicates();
+	//test_deleteDuplicates_2();
+	//test_mergeTwoLists();
+	//test_removeNthFromEnd();
+	//test_reverseList();
+	//test_rotateRight();
+	//test_partition();
+	//test_reverseBetween();
+	//test_reorderList();
+	//test_AmazinSubStrings();
+	//test_ReverseString();
+	//test_atoi();
+	//test_isNumber();
+	//test_restoreIpAddresses();
+	//test_addBinary();
+	//test_intersect();
+	test_threeSum();
 }
 
 

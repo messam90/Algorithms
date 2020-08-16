@@ -165,3 +165,204 @@ vector<string> fullJustify(vector<string> &A, int B) {
 
 	return result;
 }
+
+string countAndSay(int A) {
+	vector<string> s{"1", "11", "21"};
+	unordered_map<int, string> map{pair<int, string>(1, "11"), pair<int, string>(11, "21"), pair<int, string>(21, "1211")};
+
+	if(A < 4){
+		return s[A - 1];
+	}
+
+
+}
+
+int AmazingSubStrings(string A) {
+	int count = 0;
+	unordered_set<char> temp;
+
+	for(auto i = 0u; i < A.length(); ++i){
+		if(A[i] == 'a' || A[i] == 'e' || A[i] == 'i' || A[i] =='o' || A[i] == 'u' ||
+				A[i] == 'A' || A[i] == 'E' || A[i] == 'I' || A[i] =='O' || A[i] == 'U'){
+			count += A.length() - i;
+			if(temp.find(A[i]) != temp.end()){
+				count--;
+			}else{
+				temp.insert(A[i]);
+			}
+		}
+	}
+
+	return count;
+}
+
+string ReverseString(string A) {
+	string result, temp;
+
+	for(auto i = 0u; i < A.length(); ++i){
+		if(A[i] != ' '){
+			temp += A[i];
+		}else if(temp.length() > 0){
+			result.insert(0, temp);
+			result.insert(0, " ");
+			temp.clear();
+		}
+	}
+
+	result.insert(0, temp);
+	if(result[0] == ' '){
+		result.erase(0, 1);
+	}
+	return result;
+}
+
+int atoi_1(const string A) {
+	int result = 0, end_of_num = 0, start_of_num = 0, i = 0, neg_index = -1, prev_result = 0;
+
+	while(A[i] < '0' || A[i] > '9'){
+		if(A[i] == '-'){
+			neg_index = i;
+		}
+		start_of_num++;
+		i++;
+	}
+
+	if((neg_index != -1 && neg_index != start_of_num - 1) || (start_of_num > 0 && (A[start_of_num - 1] != '-' && A[start_of_num - 1] != '+'))){
+		return 0;
+	}
+
+	if(start_of_num > A.length() - 1){
+		return 0;
+	}
+
+	i = start_of_num;
+	end_of_num = i;
+	while((A[i] >= '0' && A[i] <= '9') && i < A.length()){
+		end_of_num++;
+		i++;
+	}
+
+	int po = 0;
+	for(auto i = end_of_num - 1; i >= start_of_num; --i){
+		prev_result = result;
+		result += (A[i] - '0') * pow(10, po++);
+		if(result < prev_result){
+			if(neg_index != -1 && neg_index == start_of_num - 1){
+				return numeric_limits<int>::min();
+			}else{
+				return numeric_limits<int>::max();
+			}
+		}
+	}
+
+	return (neg_index != -1 && neg_index == start_of_num - 1) ? -1 * result : result;
+}
+
+int isNumber(const string A) {
+	string B(A);
+	for(auto i = 0u; i < B.length(); ++i){
+		if(B[i] == '.'){
+			if((i > 0 && (!isdigit(B[i - 1]) && B[i - 1] != 'e')) ||
+					(i < B.length() - 1 && !isdigit(B[i + 1]) || i == B.length())){
+				return 0;
+			}
+		}else if(A[i] == 'e'){
+			if(i == 0 || (i > 0 && !isdigit(B[i - 1]))
+					|| (i < B.length() - 1 && !(isdigit(B[i + 1]) || B[i + 1] == '.' || B[i + 1] == '+' || B[i + 1] == '-')
+							|| i == B.length())){
+				return 0;
+			}
+		}else if(B[i] == '-' || B[i] == '+'){
+			if((i != 0 && B[i - 1] != 'e') || B.length() == 1){
+				return 0;
+			}
+		}else if(B[i] < '0' || B[i] > '9'){
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
+vector<string> restoreIpAddresses(string A) {
+	int missing_digits = 12 - A.length();
+	vector<string> result;
+
+	if(missing_digits == 0){
+		A.insert(9, ".");
+		A.insert(6, ".");
+		A.insert(3, ".");
+		return vector<string>{A};
+	}
+
+	while(missing_digits >= 0){
+		int dot_id = 9 - missing_digits;
+		string temp_result(A);
+		temp_result.insert(dot_id, ".");
+		temp_result.insert(6, ".");
+		temp_result.insert(3, ".");
+		result.push_back(temp_result);
+		missing_digits--;
+	}
+
+
+	return result;
+}
+
+string addBinary(string A, string B) {
+	int i = A.length() - 1, j = B.length() - 1, carry_over = 0;
+	string result;
+
+	while(i >= 0 && j >= 0){
+		int sum = (A[i--] - '0') + (B[j--] - '0') + carry_over;
+		carry_over = (sum > 1) ? 1 : 0;
+
+		result.insert(0, (sum == 1 || sum == 3) ? "1" : "0");
+	}
+
+	while(i >= 0){
+		int sum = (A[i--] - '0') + carry_over;
+		carry_over = (sum > 1) ? 1 : 0;
+
+		result.insert(0, (sum == 1 || sum == 3) ? "1" : "0");
+	}
+
+	while(j >= 0){
+		int sum = (B[j--] - '0') + carry_over;
+		carry_over = (sum > 1) ? 1 : 0;
+
+		result.insert(0, (sum == 1 || sum == 3) ? "1" : "0");
+	}
+
+	if(carry_over != 0){
+		result.insert(0, "1");
+	}
+
+	return result;
+}
+
+////////////////////////////////////////////////////////
+void test_addBinary(){
+	cout<<addBinary("100", "111");
+}
+
+void test_restoreIpAddresses(){
+	auto result = restoreIpAddresses("2552551135");
+	for(auto& a: result){
+		cout<<a<<" ";
+	}
+}
+void test_isNumber(){
+	cout<<isNumber("0.1");
+}
+
+void test_atoi(){
+	cout<<atoi_1("M7");
+}
+
+void test_ReverseString(){
+	cout<<ReverseString(" the sky is  blue ");
+}
+void test_AmazinSubStrings(){
+	cout<<AmazingSubStrings("AAB");
+}

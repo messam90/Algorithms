@@ -25,5 +25,8 @@ void test_equal();
 void test_copyRandomList();
 void test_lengthOfLongestSubstring();
 void test_minWindow();
+void test_fractionToDecimal();
+void test_maxPoints();
+void test_findSubstring();
 
 #endif /* HASHING_HASHING_HPP_ */

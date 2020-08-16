@@ -362,8 +362,8 @@ int lengthOfLongestSubstring(string A) {
 }
 
 string minWindow(string A, string B) {
-	int first_position = 0, match_count = 0;
-	unordered_set<char> small_set;
+	int first_position = 0, match_count = 0,matched = false;
+	unordered_multiset<char> small_set;
 	string result(A), temp_result;
 
 	for(auto i = 0; i < B.length();i++){
@@ -388,7 +388,167 @@ string minWindow(string A, string B) {
 				temp_result.clear();
 				match_count = 0;
 				small_set_temp = small_set;
+				matched = true;
 			}
+		}
+	}
+
+	if(!matched){
+		result.clear();
+	}
+
+	return result;
+}
+
+string fractionToDecimal(int A, int B) {
+    /*float float_result = (float)A / (float)B;
+    long long int_result = float_result;
+    float fraction = float_result - int_result;
+    if(abs(fraction) == 0) fraction = 0;
+    stringstream fraction_ss, int_ss;
+    fraction_ss<<fraction;
+    string fraction_string = to_string(fraction), result;
+    int_ss<<int_result;
+    string int_string = to_string(int_result);
+    bool repeating = true;
+
+    auto dot_index = fraction_string.find('.');
+    if(dot_index == string::npos) return int_string;
+    for(auto i = fraction_string.length() - 1; i >= 3; --i){
+    	if(fraction_string[i] == '0'){
+    		fraction_string.erase(fraction_string.begin() + i);
+    	}else{
+    		break;
+    	}
+    }
+    auto index = dot_index + 2;
+    for(; index < fraction_string.length(); ++index){
+        if(index == fraction_string.length() || fraction_string[index] != fraction_string[index - 1]){
+            repeating = false;
+            break;
+        }
+    }
+
+    result = (!int_result) ? result : int_string;
+
+    if((!repeating && index < dot_index + 3) || !fraction || (fraction_string.length() == 3 &&  fraction > 0) || (fraction_string.length() == 4 && fraction < 0)){
+    	result += fraction_string;
+    }else if(repeating || (!repeating && index > dot_index + 3)){
+        result += ".(";
+        result += fraction_string[dot_index + 1];
+        result += ")";
+    }
+
+    return result;*/
+
+	float float_result = (float)A / (float)B, fraction;
+	int int_result = float_result;
+	fraction = float_result - int_result;
+
+	string fraction_string = (fraction != 0) ? to_string(fraction) : "", int_string = to_string(int_result);
+	int fraction_string_size = fraction_string.length();
+	for(int i = fraction_string.length() - 1; i > 2; i--){
+		if(fraction_string[i] == '0'){
+			fraction_string_size--;
+		}
+	}
+
+	int repeat_index = -1;
+	for(auto i = 3; i < fraction_string_size; ++i){
+		if(fraction_string[i] == fraction_string[i - 1]){
+			repeat_index = i;
+			break;
+		}
+	}
+
+	if(repeat_index != -1){
+		string result(int_string.length() + repeat_index - 1 + 2, '0');
+		auto i = 0;
+		for(; i < int_string.length(); ++i){
+			result[i] = int_string[i];
+		}
+
+		result[i] = '.';
+		for(auto index = 2; index < repeat_index - 1; index++){
+			result[++i] = fraction_string[index];
+		}
+		result[++i] = '(';
+		result[++i] = fraction_string[repeat_index - 1];
+		result[++i] = ')';
+
+		return result;
+	}else{
+		int result_size = int_string.length() + fraction_string_size - 2 + 1;
+		result_size = (result_size == 0) ? 1 : result_size;
+		string result(result_size, '0');
+		auto i = 0;
+		for(; i < int_string.length(); ++i){
+			result[i] = int_string[i];
+		}
+		if(int_string[0] == '0' && fraction < 0){
+			result[0] = '-';
+			result[1] = '0';
+			i = 2;
+		}
+
+		if(fraction != 0)
+			result[i] = '.';
+		int index;
+		if(fraction < 0) index = 3; else index = 2;
+		for(; index < fraction_string_size && fraction != 0; ++index){
+			result[++i] = fraction_string[index];
+		}
+
+		return result;
+	}
+}
+
+int maxPoints(vector<int> &A, vector<int> &B) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+	unordered_map<int, int> y_map;
+	for(auto i = 0; i < B.size(); ++i){
+		auto it = y_map.find(B[i]);
+		if(it == y_map.end()){
+			y_map[B[i]] = 1;
+		}else{
+			it->second++;
+		}
+	}
+
+	int max_points = 0;
+	for(auto it = y_map.begin(); it != y_map.end(); ++it){
+		max_points = (max_points < it->second) ? it->second : max_points;
+	}
+
+	return max_points;
+}
+
+inline void concat_set(unordered_set<string>& set, const vector<string>& B){
+	int i = 0, j = B.size() - 1;
+	while(i < B.size() - 1){
+		set.insert(B[i] + B[j]);
+		set.insert(B[j] + B[i]);
+		j--;
+		if(j == i){
+			i++;
+			j = B.size() - 1;
+		}
+	}
+}
+
+vector<int> findSubstring(string A, const vector<string> &B) {
+	unordered_set<string> words_set;
+	concat_set(words_set, B);
+
+	vector<int> result;
+	for(auto i = 0; i < A.length(); ++i){
+		string temp = A.substr(i, B[0].length() * 2);
+
+		if(words_set.find(temp) != words_set.end()){
+			result.push_back(i);
 		}
 	}
 
@@ -396,8 +556,24 @@ string minWindow(string A, string B) {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
+void test_findSubstring(){
+	string s{"barfoothefoobarman"};
+	const vector<string> words{"foo", "bar"};
+	auto result = findSubstring(s, words);
+	for(auto& a : result){
+		cout<<a<<" ";
+	}
+}
+
+void test_maxPoints(){
+	vector<int> A{0,1, -1}, B{0, 1,-1};
+	cout<<maxPoints(A, B);
+}
+void test_fractionToDecimal(){
+	cout<<fractionToDecimal(0, -1);
+}
 void test_minWindow(){
-	cout<<minWindow("ADOBECODEBANC", "ABC");
+	cout<<minWindow("AAAAAA", "AA");
 }
 
 void test_lengthOfLongestSubstring(){

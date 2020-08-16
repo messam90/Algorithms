@@ -83,4 +83,109 @@ int threeSumClosest(vector<int> &A, int B) {
 	return closestSum;
 }
 
+vector<int> intersect(const vector<int> &A, const vector<int> &B) {
+	int i = 0;
+	const vector<int> *smaller_array, *bigger_array;
+	vector<int> result;
+
+	if(A.size() < B.size()){
+		smaller_array = &A;
+		bigger_array = &B;
+	}else{
+		smaller_array = &B;
+		bigger_array = &A;
+	}
+
+	for(auto j = 0u; j < smaller_array->size();){
+		if((*smaller_array)[j] == (*bigger_array)[i]){
+			result.push_back((*smaller_array)[j]);
+			j++;
+		}
+		i++;
+	}
+
+	return result;
+}
+
+vector<vector<int> > threeSum(vector<int> &A) {
+	unordered_set<int> temp_set;
+	vector<vector<int>> result;
+
+	if(A.size() < 3) return result;
+
+	for(auto i = 0; i < A.size() - 1; ++i){
+		unordered_set<long long> temp_set;
+
+		for(auto j = i + 1; j < A.size(); ++j){
+			long long sum = -1 * ((long long)A[i] + (long long)A[j]);
+
+			if(temp_set.find(sum) != temp_set.end()){
+	            multiset<int> temp{A[i], A[j], (int)sum};
+	            vector<int> temp_vector;
+	            for(auto it = temp.begin(); it != temp.end(); ++it){
+	                temp_vector.push_back(*it);
+	            }
+	            if(find(result.begin(), result.end(), temp_vector) == result.end()){
+	                result.push_back(temp_vector);
+	            }
+			}else{
+				temp_set.insert(A[j]);
+			}
+		}
+	}
+
+	return result;
+
+	/**
+	 *     int i = 0, j = i + 1, k = j + 1;
+    vector<vector<int>> result;
+
+    if(A.size() < 3) return result;
+
+    while(i < A.size() - 2){
+        if((long long)A[i] + (long long)A[j] + (long long)A[k] == 0){
+            multiset<int> temp{A[i], A[j], A[k]};
+            vector<int> temp_vector;
+            for(auto it = temp.begin(); it != temp.end(); ++it){
+                temp_vector.push_back(*it);
+            }
+            if(find(result.begin(), result.end(), temp_vector) == result.end()){
+                result.push_back(temp_vector);
+            }
+        }
+        k++;
+        if(k == A.size()){
+            j++;
+            k = j + 1;
+        }
+        if(j == A.size() - 1){
+            i++;
+            j = i + 1;
+            k = j + 1;
+        }
+    }
+
+    return result;
+	 */
+}
+
+//////////////////////////////////////////////////////
+void test_threeSum(){
+	vector<int> A{-1, 0, 1, 2, -1, -4};
+	auto result = threeSum(A);
+	for(auto a : result){
+		for(auto b : a){
+			cout<<b<<" ";
+		}
+		cout<<endl;
+	}
+}
+
+void test_intersect(){
+	vector<int> A{1, 2, 3, 3, 4, 5, 6}, B{3, 3, 5};
+	auto result = intersect(A, B);
+	for(auto a : result){
+		cout<<a<<" ";
+	}
+}
 
