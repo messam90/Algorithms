@@ -10,6 +10,12 @@
 
 void test_intersect();
 void test_threeSum();
-
+void test_nTriang();
+void test_diffPossible();
+void test_removeDuplicates();
+void test_removeElement();
+void test_sortColors();
+void test_minimize();
+void test_divide();
 
 #endif /* TWOPOINTERS_TWOPOINTERS_HPP_ */

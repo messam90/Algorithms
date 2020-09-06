@@ -14,6 +14,8 @@ void test_atoi();
 void test_isNumber();
 void test_restoreIpAddresses();
 void test_addBinary();
-
+void test_longestPalindrome();
+void test_power();
+void test_multiply();
 
 #endif /* STRINGS_STRINGS_HPP_ */

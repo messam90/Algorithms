@@ -11,6 +11,8 @@
 #include "LinkedLists.hpp"
 #include "Strings.hpp"
 #include "TwoPointers.hpp"
+#include "BitManipulation.hpp"
+#include "tree.hpp"
 
 int main(){
 	//testSolveMaps();
@@ -52,7 +54,45 @@ int main(){
 	//test_restoreIpAddresses();
 	//test_addBinary();
 	//test_intersect();
-	test_threeSum();
+	//test_threeSum();
+	//test_nTriang();
+	//test_diffPossible();
+	//test_removeDuplicates();
+	//test_removeElement();
+	//test_sortColors();
+	//test_minimize();
+	//test_reverse();
+	//test_divide();
+	//test_totalSetBits();
+	//test_singleNumber_2();
+	//test_longestPalindrome();
+	//test_power();
+	//test_multiply();
+	//test_kthsmallest();
+	//test_t2sum();
+	//test_BSTIterator();
+	//test_removehalfnodes_1();
+	//test_pathToNode();
+	//test_recoverTree();
+	//test_verticalOrderTraversal();
+	//test_diagonal_traverse();
+	//test_inordertraversal();
+	//test_postorder_traversal();
+	//preorder_traversal();
+	//test_node_cousins();
+	//test_zigzagLevelOrder();
+	//test_level_order_traversal();
+	//test_isSameTree_internal();
+	//test_isSymmetric();
+	//test_sortedArrayToBST();
+	//test_buildTree();
+	//test_buildTree_PreIn();
+	//test_hasPathSum();
+	//test_pathSum();
+	//test_min_depth();
+	//test_lca();
+	//test_flatten();
+	test_merge_trees();
 }
 
 
